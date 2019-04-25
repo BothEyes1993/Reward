@@ -4,7 +4,7 @@
 >注意只能在支付宝app里面打开扫一扫，扫描二维码 
 
 效果体验
-
+![在这里插入图片描述](https://img-blog.csdnimg.cn/2019042520162844.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3UwMTA2MzMyNjY=,size_16,color_FFFFFF,t_70)
 
 
 
