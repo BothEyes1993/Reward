@@ -93,6 +93,12 @@
     </body>
     <script>
         $(function(){
+            var ua = window.navigator.userAgent.toLowerCase();
+            if (ua.match(/AlipayClient/i) !== 'alipayclient') {
+                alert('请用支付宝扫描此二维码！')
+                return
+            }
+
             var money = '1'
             var desc = ""
             var uId = '2088902054257769'
@@ -161,8 +167,8 @@
                 }, false);
 
                 AlipayJSBridge.call('setTitle', {
-                    title: '123',
-                    subtitle: '456'
+                    title: '支付宝打赏组件',
+                    subtitle: 'BothEyes1993'
                 });
                 AlipayJSBridge.call('setTitleColor', {
                     color: 38619
