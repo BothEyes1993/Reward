@@ -96,7 +96,7 @@
         $(function(){
             $('.noneId,.container').hide()
             var ua = window.navigator.userAgent.toLowerCase();
-            if (ua.match(/AlipayClient/i) === 'alipayclient') {
+            if (ua.match(/AlipayClient/i) == 'alipayclient') {
                 $('.container').show()
             }else{
                 $('.noneId').show()
