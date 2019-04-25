@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0">
+        <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+        <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+        <meta http-equiv="Pragma" content="no-cache">
+        <meta http-equiv="Expires" content="0">
+        <title>支付宝打赏组件</title>
+        <script src="http://lib.sinaapp.com/js/jquery/2.0.2/jquery-2.0.2.min.js"></script>
+        <style type="text/css">
+            * {
+                margin: 0;
+                padding: 0;
+                box-sizing: border-box;
+                background-repeat: no-repeat;
+                -webkit-tap-highlight-color: rgba(255, 255, 255, 0)
+            }
+            html,
+            body {
+                font-family: "SF Pro Text", "SF Pro Icons", "Helvetica Neue", Helvetica, Arial, sans-serif;
+                -webkit-font-smoothing: antialiased;
+                -moz-osx-font-smoothing: grayscale;
+                font-size: 14px;
+                color: #031C23;
+                background: #F4F7FB;
+                height: 100vh;
+            }
+            .container {
+                max-width: 750px;
+                display: block;
+                min-height: 100%;
+                margin: 0 auto;
+                overflow: auto;
+                text-align: center;
+            }
+            p{
+                margin-top: 50px;
+            }
+            img{
+                width: 40px;
+                border-radius: 20px;
+            }
+            li{
+                border: 1px solid #eee;
+                display: inline-block;
+                padding: 10px 30px;
+                background: #fff;
+                cursor: pointer;
+                box-shadow: 1px 2px 2px #eee;
+                border-radius: 5px;
+                font-size: 18px;
+                font-weight: 500;
+                width: 25%;
+                margin-bottom: 10px;
+                margin-right: 10px;
+            }
+            textarea{
+                width: 70%;
+                display: block;
+                margin: 10px auto;
+                height: 70px;
+            }
+            button{
+                padding: 10px 30px;
+                background: #03A9F4;
+                color: #fff;
+                font-size: 15px;
+                font-weight: 900;
+                border-radius: 10px;
+                margin-top: 10px;
+            }
+            .active{
+                background: #FF5722;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="container">
+            <p><img src="./BothEyes.jpg"><h3>打赏给作者</h3></p>
+            <ul>
+                <li>1元</li>
+                <li>2元</li>
+                <li>3元</li>
+                <li>4元</li>
+                <li>5元</li>
+                <li>6元</li>
+            </ul>
+            <textarea id="textarea" placeholder="给作者留言鼓励…"></textarea>
+            <button id="btn">去打赏</button>
+        </div>
+    </body>
+    <script>
+        $(function(){
+            var money = '1'
+            var desc = ""
+            var uId = '2088902054257769'
+            var param
+
+            $('ul').on('click','li',function(){
+                $('li').removeClass('active')
+                $(this).addClass('active')
+                money = $(this).text().split('元')[0]
+            })
+
+            function ready(a) {
+                window.AlipayJSBridge ? a && a() : document.addEventListener("AlipayJSBridgeReady", a, !1)
+            }
+            
+            function sub() {
+                desc = $('#textarea').val()
+                try {
+                    param = {
+                        actionType: 'scan',
+                        u: uId,
+                        a: money,
+                        m: desc,
+                        biz_data: {
+                            s: 'money',
+                            u: uId,
+                            a: money,
+                            m: desc
+                        }
+                    };
+                    AlipayJSBridge.call('startApp', {
+                        appId: '20000123',
+                        param: param
+                    }, function (a) {
+                        if (a.errorCode > 0) {
+                            alert(JSON.stringify(a));
+                        }
+                    });
+                    
+                } catch (e) {
+                    alert(e);
+                }
+            }
+            
+            ready(function () {
+                AlipayJSBridge.call('setOptionMenu', {
+                    title: 'Menu',
+                    redDot: '-1',
+                    color: '#ffffffff', //ARGB色值
+                });
+                AlipayJSBridge.call('showOptionMenu');
+                document.addEventListener('optionMenu', function (e) {
+                    AlipayJSBridge.call('showPopMenu', {
+                        menus: [
+                            {name: "刷新", tag: "rfs"},
+                        ]
+                    }, function (e) {
+                        // alert(JSON.stringify(e))
+                    });
+                }, false);
+
+                document.addEventListener('popMenuClick', function (e) {
+                    if (e.data.tag === 'rfs') {
+                        window.location.reload();
+                    }
+                }, false);
+
+                AlipayJSBridge.call('setTitle', {
+                    title: '123',
+                    subtitle: '456'
+                });
+                AlipayJSBridge.call('setTitleColor', {
+                    color: 38619
+                });
+                AlipayJSBridge.call("setBarBottomLineColor", {
+                    color: 16733440
+                });
+                document.getElementById('btn').addEventListener('click', sub, false);
+            });
+        })
+    </script>
+</html>
