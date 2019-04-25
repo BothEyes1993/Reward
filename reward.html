@@ -77,6 +77,7 @@
         </style>
     </head>
     <body>
+        <div class="noneId">请用支付宝扫描此二维码！</div>
         <div class="container">
             <p><img src="./BothEyes.jpg"><h3>打赏给作者</h3></p>
             <ul>
@@ -93,9 +94,12 @@
     </body>
     <script>
         $(function(){
+            $('.noneId,.container').hide()
             var ua = window.navigator.userAgent.toLowerCase();
-            if (ua.match(/AlipayClient/i) !== 'alipayclient') {
-                alert('请用支付宝扫描此二维码！')
+            if (ua.match(/AlipayClient/i) === 'alipayclient') {
+                $('.container').show()
+            }else{
+                $('.noneId').show()
                 return
             }
 
