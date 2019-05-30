@@ -89,7 +89,7 @@
                 <li>6元</li>
             </ul>
             <textarea id="textarea" placeholder="给作者留言鼓励…"></textarea>
-            <button id="btn">去打赏123</button>
+            <button id="btn">去打赏</button>
         </div>
     </body>
     <script>
@@ -137,7 +137,7 @@
                         appId: '20000123',
                         param: param
                     }, function (a) {
-                        console.dir(a)
+                        alert(1);
                         if (a.errorCode > 0) {
                             alert(JSON.stringify(a));
                         }
